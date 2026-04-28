@@ -131,7 +131,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewTransactionsButton.setOnClickListener {
-            Toast.makeText(this, "View Transactions - Coming soon!", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "View Transactions - Coming soon!", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ViewTransactions::class.java)
+
+            intent.putExtra("User_ID", userId)
+            intent.putExtra("USER_NAME", userName)
+
+            startActivity(intent)
         }
 
         categoriesButton.setOnClickListener {
