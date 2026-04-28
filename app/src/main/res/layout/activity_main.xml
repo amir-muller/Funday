@@ -57,6 +57,13 @@
         android:layout_height="wrap_content"
         android:hint="Description"/>
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/categorySpinner"
+        android:layout_margin="8dp"
+        android:minHeight="48dp" />
+
     <Button
         android:id="@+id/addTransactionButton"
         android:layout_width="match_parent"
