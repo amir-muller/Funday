@@ -16,6 +16,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import android.widget.EditText
 import com.example.funday.Data.Transaction
 import com.example.funday.Data.AppDatabase
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import com.example.funday.Data.Category
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,8 +50,18 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var logoutButton: Button
 
+    private lateinit var categorySpinner: Spinner
+
+    private var categoryList: List<Category> = emptyList()
+
     private var userId: Int = -1
     private var userName: String = ""
+
+    override fun onResume() {
+        super.onResume()
+        loadCategoriesIntoSpinner()
+        loadBalance()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +81,13 @@ class MainActivity : AppCompatActivity() {
         categoriesButton = findViewById(R.id.categoriesButton)
         goalsButton = findViewById(R.id.goalsButton)
         logoutButton = findViewById(R.id.logoutButton)
+        categorySpinner = findViewById(R.id.categorySpinner)
         val photoButton = findViewById<Button>(R.id.btnPhoto)
 
         // Set welcome message
         welcomeText.text = "Welcome, $userName!"
+
+        loadCategoriesIntoSpinner()
 
         goalsButton.setOnClickListener{
             Toast.makeText(
@@ -99,14 +115,24 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            //get cat from spinner
+            val selectedPosition = categorySpinner.selectedItemPosition
+            val selectedCategoryId = if (categoryList.isNotEmpty()) {
+                categoryList[selectedPosition].id
+            } else {
+                1
+            }
+
             val transaction = Transaction(
                 amount = amountText.toDouble(),
                 userId = 1,
-                CategoryId = 1,
+                CategoryId = selectedCategoryId,
                 date = System.currentTimeMillis(),
                 description = descriptionText,
                 photoUri = selectedImageUri?.toString()
             )
+
+
 
             lifecycleScope.launch {
 
@@ -141,7 +167,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         categoriesButton.setOnClickListener {
-            Toast.makeText(this, "Manage Categories - Coming soon!", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ManageCategoriesActivity::class.java)
+            startActivity(intent)
         }
 
         logoutButton.setOnClickListener {
@@ -173,4 +200,24 @@ class MainActivity : AppCompatActivity() {
         finish()
         Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
     }
+
+    private fun loadCategoriesIntoSpinner() {
+        lifecycleScope.launch {
+            val db = AppDatabase.getDatabase(this@MainActivity)
+            categoryList = db.categoryDao().getAll()
+
+            val categoryNames = categoryList.map { it.name }
+
+            runOnUiThread {
+                val adapter = ArrayAdapter(
+                    this@MainActivity,
+                    android.R.layout.simple_spinner_item,
+                    categoryNames
+                )
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                categorySpinner.adapter = adapter
+            }
+        }
+    }
+
 }
