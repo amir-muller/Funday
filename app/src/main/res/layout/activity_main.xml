@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Welcome Header -->
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome!"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- Balance Card (simplified without CardView) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center"
+        android:background="#F5F5F5"
+        android:layout_marginBottom="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Balance"
+            android:textSize="14sp"
+            android:textColor="#666666"/>
+
+        <TextView
+            android:id="@+id/balanceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$0.00"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="#4CAF50"/>
+
+    </LinearLayout>
+
+    <!-- Main Buttons -->
+    <EditText
+        android:id="@+id/expenseAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Amount"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/expenseDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description"/>
+
+    <Button
+        android:id="@+id/addTransactionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="➕ Add Transaction"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/viewTransactionsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="📋 View Transactions"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/categoriesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🏷️ Manage Categories"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/goalsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Spending Goals"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🚪 Logout"/>
+
+    <Button
+        android:id="@+id/btnPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Photo"/>
+
+    <ImageView
+        android:id="@+id/expenseImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"/>
+
+</LinearLayout>
